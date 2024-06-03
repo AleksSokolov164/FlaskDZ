@@ -17,10 +17,10 @@
             </a>
 
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ url_for('index') }}" class="nav-link px-2">Игра</a></li>
-            <li><a href="{{ url_for('about') }}" class="nav-link px-2">О проекте</a></li>
-            <li><a href="#" class="nav-link px-2">Цены</a></li>
-            <li><a href="#" class="nav-link px-2">Часто задаваемые вопросы</a></li>
+              <li><a href="{{ url_for('index') }}" class="nav-link px-2 "><h4 style="color:#000000;">Профилактический детектив</h4></a></li>
+              <li><a href="{{ url_for('project_info') }}" class="nav-link px-2"><h4 style="color:#000000;">О проекте</h4></a></li>
+              <li><a href="{{ url_for('about') }}" class="nav-link px-2"><h4 style="color:#000000;">O нас</h4></a></li>
+
           </ul>
 
           <div class="col-md-3 text-end">
@@ -36,10 +36,13 @@
               <a href="https://edu.gov.ru/national-project" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                   <img class="footer__img" src="{{ url_for('static', filename='img/NPO.png') }}" alt="law">
               </a>
+              <a href="https://fadm.gov.ru/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                  <img class="footer__img" src="{{ url_for('static', filename='img/RDD.png') }}" alt="law">
+              </a>
               <a href="https://navigator56.ru/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
                   <img class="footer__img" src="{{ url_for('static', filename='img/logo.png') }}" alt="law">
               </a>
-              <span class="mb-3 mb-md-0 text-muted">ОРМОО ПСЗИ "Навигатор"</span>
+
 
           </div>
 

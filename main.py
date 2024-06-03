@@ -13,6 +13,10 @@ def index():
 
 @app.route('/about')
 def about():
+    return render_template('about.html')
+
+@app.route('/project_info')
+def project_info():
     return render_template('project_info.html')
 
 if __name__ == '__main__':
