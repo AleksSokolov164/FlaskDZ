@@ -1,7 +1,7 @@
 /* HEADER стили для меню */
 header {
-    position: sticky;
-    top: 0;
+    /* position: sticky;
+    top: 0; */
     padding: 10px;
     z-index: 1000;
     background: #fff;
@@ -14,9 +14,17 @@ header {
     width: 2+-80px;
     }
 
+.content {
+    padding: 10px;
+    z-index: 1000;
+    background: #fff;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+         box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    }
+
 .content__img {
-    height: 364px;
-    width: 364px;
+    height: 464px;
+    width: 464px;
     }
 
 .footer__img {

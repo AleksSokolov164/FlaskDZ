@@ -6,8 +6,24 @@
 {% endblock %}
 
 {% block content %}
-<h1>Профилактический детектив</h1>
+<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <h2>Профилактический детектив "Роковая ошибка"</h2>
           <a href="#" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-              <img class="content__img" src="{{ url_for('static', filename='img/dver.png') }}" alt="dver">
+              <img class="content__img" src="{{ url_for('static', filename='img/vera.png') }}" alt="dver">
           </a>
+        <a> <h5> <b>Автор:</b> Александр Соколов</h5><br>
+        <h5> <b>Промты для Kandinsry 3.1 составлял:</b> Кирилл Черницов</h5><br>
+         <h5>
+        Перед вами интерактивный рассказ. Это значит, что от вашего участия будет зависеть ход этой история и судьба ее героев.
+            Вы будете решать, что должны сказать герои или что они должны сделать в сложной ситуации. Ваша задача помочь главной героине Веронике Скворцовой разобраться в сложной ситуации.
+
+        А сейчас знакомьтесь с нашей историей и принимайте участие в её создании.
+        </h5></a>
+
+    <button  type="button" class="btn btn-warning me-2">Далее</button>
+
+
+
+</div>
+
 {% endblock %}
