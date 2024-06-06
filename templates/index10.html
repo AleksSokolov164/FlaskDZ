@@ -1,0 +1,26 @@
+<!-- наследуем от базового шаблона-->
+{% extends 'base.html' %}
+
+{% block title %}
+Детектив
+{% endblock %}
+
+{% block content %}
+<h2>Это заблуждение!</h2>
+<div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="#" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <img class="content__img" src="{{ url_for('static', filename='img/vopros.png') }}" alt="dver">
+    </a>
+    <h6>
+        <p style="text-indent: 25px;line-height:1.5;">
+
+            <br> Всё чаще ВИЧ-инфекцией заражаются социально благополучные, работающие люди.
+            <br> А лидирующий путь заражения – половой!
+        </p>
+    </h6>
+</div>
+<a href="{{ url_for('index7') }}" class="nav-link px-2"><h4 style="color:#FFFF00;text-shadow: 0 0 4px #000;">
+    <u>Попробуйте ответить снова.</u>
+</h4></a>
+
+{% endblock %}

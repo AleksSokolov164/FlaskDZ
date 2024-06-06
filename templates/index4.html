@@ -1,0 +1,38 @@
+<!-- наследуем от базового шаблона-->
+{% extends 'base.html' %}
+
+{% block title %}
+Детектив
+{% endblock %}
+
+{% block content %}
+<h2>ВЕЩЬ</h2>
+<div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <h5><p style="text-indent: 25px;line-height:1.5;">
+        <b>Вы уже догадались какая?</b><br>
+        <br>-Ты до сих пор живешь один? – продолжила «допрос» Вероника,
+        <br>- Да!
+        <br>- И у тебя нет постоянной женщины?
+        <br>- Нет! Но какое это имеет значение?
+        <br>- Значение имеет то, чего у тебя нет с собой…
+        <br>
+    </p>
+    </h5>
+
+    <a href="#" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <img class="content__img" src="{{ url_for('static', filename='img/veh.png') }}" alt="dver">
+    </a>
+</div>
+
+<h5><b>Так какой же важной вещи нет у Руслана? Что делает его подозреваемым?</b></h5>
+<a href="{{ url_for('index5') }}" class="nav-link px-2"><h5 style="color:#FFFF00;text-shadow: 0 0 4px #000;">
+    <u>а)Отсутствует справка об отрицательных результатах анализа на антитела к ВИЧ</u>
+</h5></a>
+<a href="{{ url_for('index6') }}" class="nav-link px-2"><h5 style="color:#FFFF00;text-shadow: 0 0 4px #000;">
+    <u>б)Отсутствует одеколон «Казанова»</u>
+</h5></a>
+<a href="{{ url_for('index7') }}" class="nav-link px-2"><h5 style="color:#FFFF00;text-shadow: 0 0 4px #000;">
+    <u>в)Отсутствуют презервативы</u>
+</h5></a>
+
+{% endblock %}
