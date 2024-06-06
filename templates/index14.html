@@ -1,0 +1,27 @@
+<!-- наследуем от базового шаблона-->
+{% extends 'base.html' %}
+
+{% block title %}
+Детектив
+{% endblock %}
+
+{% block content %}
+<h2>Вы ответили не верно!</h2>
+<div class="d-flex flex-row align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="#" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        <img class="content__img" src="{{ url_for('static', filename='img/VIH.png') }}" alt="vih">
+    </a>
+    <h6>
+        <p style="text-indent: 25px;line-height:1.5;">
+            <br> Носителем вируса иммунодефицита человека (ВИЧ) может быть только человек . ВИЧ-инфекция не может
+            передаваться при укусах животных или насекомых. При укусе собаки есть вероятность заразиться вирусом
+            бешенства, поэтому обязательно нужно обратиться к врачу!
+
+        </p>
+    </h6>
+</div>
+<a href="{{ url_for('index12') }}" class="nav-link px-2"><h4 style="color:#FFFF00;text-shadow: 0 0 4px #000;">
+    <u>Попробуйте ответить снова.</u>
+</h4></a>
+
+{% endblock %}

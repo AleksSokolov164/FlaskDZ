@@ -46,6 +46,35 @@ def index9():
 @app.route('/index10')
 def index10():
     return render_template('index10.html')
+
+@app.route('/index11')
+def index11():
+    return render_template('index11.html')
+@app.route('/index12')
+def index12():
+    return render_template('index12.html')
+
+@app.route('/index13')
+def index13():
+    return render_template('index13.html')
+
+@app.route('/index14')
+def index14():
+    return render_template('index14.html')
+@app.route('/index15')
+def index15():
+    return render_template('index15.html')
+
+@app.route('/index16')
+def index16():
+    return render_template('index16.html')
+@app.route('/index17')
+def index17():
+    return render_template('index17.html')
+
+@app.route('/index18')
+def index18():
+    return render_template('index18.html')
 @app.route('/about')
 def about():
     return render_template('about.html')
