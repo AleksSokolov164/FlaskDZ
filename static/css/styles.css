@@ -2,6 +2,7 @@
 header {
     /* position: sticky;
     top: 0; */
+    font-family: 'Comic Sans MS'
     padding: 10px;
     z-index: 1000;
     background: #fff;
@@ -15,6 +16,7 @@ header {
     }
 
 .content {
+    font-family: 'Comic Sans MS'
     padding: 10px;
     z-index: 1000;
     background: #fff;

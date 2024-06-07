@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 #
-# app = Flask(__name__)
+app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///newflask.db'
 # db = SQLAlchemy(app)
 
@@ -83,5 +83,8 @@ def about():
 def project_info():
     return render_template('project_info.html')
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
 if __name__ == '__main__':
     app.run(debug=True)

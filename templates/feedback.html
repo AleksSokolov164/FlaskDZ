@@ -1,0 +1,19 @@
+<!-- наследуем от базового шаблона-->
+{% extends 'base.html' %}
+
+{% block title %}
+Детектив
+{% endblock %}
+
+{% block content %}
+<form action="/feedback" method="POST" class="form-contact">
+
+    <p><h5><label>Имя </label></h5><input type="text" name="username" value="" required />
+    <p><h5><label>Email</label></h5><input type="text" name="email" value="" required />
+    <p><h5><label>Ваш отзыв</label></h5>
+    <p><textarea name="message" rows=7 cols=40></textarea>
+    <p><input type="submit" value="Отправить" />
+
+</form>
+
+{% endblock %}
