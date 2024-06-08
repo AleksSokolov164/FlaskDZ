@@ -1,0 +1,10 @@
+<!-- наследуем от базового шаблона-->
+{% extends 'base.html' %}
+
+{% block title %}
+Детектив
+{% endblock %}
+
+{% block content %}
+<p> Страница не найдена!!! Вернуться на <a href="{{url_for('index')}}">главную</a>
+{% endblock %}

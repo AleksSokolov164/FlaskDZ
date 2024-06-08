@@ -1,8 +1,6 @@
 /* HEADER стили для меню */
 header {
-    /* position: sticky;
-    top: 0; */
-    font-family: 'Comic Sans MS'
+
     padding: 10px;
     z-index: 1000;
     background: #fff;
@@ -16,12 +14,11 @@ header {
     }
 
 .content {
-    font-family: 'Comic Sans MS'
     padding: 10px;
     z-index: 1000;
     background: #fff;
     -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.15);
     }
 
 .content__img {
@@ -33,3 +30,13 @@ header {
     height: 64px;
     width: 64px;
     }
+
+.flash {padding: 10px;}
+.flash.success {
+     border: 1px solid #21DB56;
+     background: #ffa500;
+     }
+.flash.error {
+     border: 1px solid #FF4343;
+     background: #ffff00;
+     }
