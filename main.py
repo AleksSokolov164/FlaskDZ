@@ -39,8 +39,7 @@ def connect_db():
 def create_db():
     '''Вспомогательная функция создания таблиц БД'''
     db = connect_db()
-    with app.open_resource('sq_db.sql',
-                           mode='r') as f:  # прочитали и запустили скрипты по созданию, записали изм, закрыли
+    with app.open_resource('sq_db.sql',mode='r') as f:  # прочитали и запустили скрипты по созданию, записали изм, закрыли
         db.cursor().executescript(f.read())
     db.commit()
     db.close()
