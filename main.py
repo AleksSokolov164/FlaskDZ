@@ -9,7 +9,7 @@ from UserLogin import UserLogin
 
 # конфигурационная информация
 DATABASE = '/tmp/flsite.db'  # путь
-DEBUG = True  # включен реэим отладки
+DEBUG = False  # включен реэим отладки
 SECRET_KEY = 'akjjjjjjjh79kandck9pAMCKn0lkdcnkj'  # случайный набор для шишрования сессии браузером
 #
 app = Flask(__name__)
