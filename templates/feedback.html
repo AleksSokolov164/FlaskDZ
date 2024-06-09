@@ -10,7 +10,7 @@
 {% for cat, msg in get_flashed_messages(True) %}
 <div class="flash {{cat}}">{{msg}}</div>
 {% endfor %}
-<form action="/feedback" method="POST" class="form-contact">
+<form action="{{url_for('feedback')}}" method="POST" class="form-contact">
 
     <p><h5><label>Имя </label></h5><input type="text" name="username" value="" required />
     <p><h5><label>Email</label></h5><input type="text" name="email" value="" required />
@@ -19,11 +19,11 @@
     <p><input type="submit" value="Отправить" />
 
 </form>
-<h4> Отзывы</h4>
+<h4> Отзывы:</h4>
 <ul class="mess">
   {% for m in message_menu %}
     <li><h5>
-        <p class="username"><b>{{ m.username }}</b></p>
+        <p class="username"><b>Пользователь - {{ m.username }}</b></p>
         <p class="message">{{m.message}}</p>
         </h5>
     </li>

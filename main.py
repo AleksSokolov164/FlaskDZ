@@ -150,16 +150,22 @@ def project_info():
 
 @app.route('/feedback', methods=['POST', 'GET'])
 def feedback():
+    db = get_db()
+    dbase = FDataBase(db)
+
     if request.method == 'POST':
         if (len(request.form['username']) != 0
                 and len(request.form['email']) != 0
                 and '@' in request.form['email']
                 and request.form['message'] != ''):
-            flash('Сообщение отправлено', category='success')
+            res = dbase.addPost(request.form['username'], request.form['email'], request.form['message'])
+            if not res:
+                flash('Ошибка отправки. Проверьте корректность заполнения полей', category='error')
+            else:
+                flash('Сообщение отправлено', category='success')
         else:
             flash('Ошибка отправки. Проверьте корректность заполнения полей', category='error')
-    db = get_db()
-    dbase = FDataBase(db)
+
     return render_template('feedback.html', message_menu = dbase.getMenu()), 404
 
 
