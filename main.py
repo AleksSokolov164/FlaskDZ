@@ -1,17 +1,50 @@
-from flask import Flask, render_template, url_for, request, flash, session, redirect, abort
-from flask_sqlalchemy import SQLAlchemy
+import os  # работа с файловой системой
+import sqlite3
 
+from flask import Flask, render_template, url_for, request, flash, session, redirect, abort, g
+from FDataBase import FDataBase
+# конфигурационная информация
+DATABASE = '/tmp/flsite.db'  # путь
+DEBUG = True  # включен реэим отладки
+SECRET_KEY = 'akjjjjjjjh79kandck9pAMCKn0lkdcnkj'  # случайный набор для шишрования сессии браузером
 #
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'akjjjjjjjh79kandck9pAMCKn0lkdcnkj'
+app.config.from_object(__name__)  # загружаем конфигурацию и текущего модуля
+
+app.config.update(dict(DATABASE=os.path.join(app.root_path,
+                                             'flsite.db')))  # переопределяем путь. уточняем т.к. одной бд могут пользоваться несколько приложений
 
 
 # db = SQLAlchemy(app)
+
+# устанавливаем соединение с базой данных
+def connect_db():
+    conn = sqlite3.connect(app.config['DATABASE'])
+    conn.row_factory = sqlite3.Row  # записи будут представленны в виде словаря
+    return conn
+
+
+def create_db():
+    '''Вспомогательная функция создания таблиц БД'''
+    db = connect_db()
+    with app.open_resource('sq_db.sql',
+                           mode='r') as f:  # прочитали и запустили скрипты по созданию, записали изм, закрыли
+        db.cursor().executescript(f.read())
+    db.commit()
+    db.close()
+
+
+def get_db():
+    """ Соединение с базой данных, если его еще нет"""
+    if not hasattr(g, 'link_db'):
+        g.link_db = connect_db()
+    return g.link_db
 
 
 @app.route('/index')
 @app.route('/')
 def index():
+    db = get_db()
     return render_template('index.html')
 
 
@@ -125,8 +158,9 @@ def feedback():
             flash('Сообщение отправлено', category='success')
         else:
             flash('Ошибка отправки. Проверьте корректность заполнения полей', category='error')
-        print(request.form)
-    return render_template('feedback.html'), 404
+    db = get_db()
+    dbase = FDataBase(db)
+    return render_template('feedback.html', message_menu = dbase.getMenu()), 404
 
 
 @app.errorhandler(404)
@@ -143,11 +177,19 @@ def login():
         return redirect(url_for('profile', username=session['userLogged']))
     return render_template('login.html')
 
+
 @app.route('/profile/<username>')
 def profile(username):
     if 'userLogged' not in session or session['userLogged'] != username:
         abort(401)
     return f'Пользователь: {username}'
+
+@app.teardown_appcontext
+def close_db(error):
+    """Закрываем соединение с базой данных, если оно было уставновлено"""
+    if hasattr(g,'link_db'):
+        g.link_db.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

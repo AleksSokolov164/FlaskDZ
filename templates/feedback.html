@@ -19,5 +19,14 @@
     <p><input type="submit" value="Отправить" />
 
 </form>
-
+<h4> Отзывы</h4>
+<ul class="mess">
+  {% for m in message_menu %}
+    <li><h5>
+        <p class="username"><b>{{ m.username }}</b></p>
+        <p class="message">{{m.message}}</p>
+        </h5>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
