@@ -3,6 +3,10 @@ import sqlite3
 
 from flask import Flask, render_template, url_for, request, flash, session, redirect, abort, g
 from FDataBase import FDataBase
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user, current_user
+from UserLogin import UserLogin
+
 # конфигурационная информация
 DATABASE = '/tmp/flsite.db'  # путь
 DEBUG = True  # включен реэим отладки
@@ -14,11 +18,19 @@ app.config.from_object(__name__)  # загружаем конфигурацию 
 app.config.update(dict(DATABASE=os.path.join(app.root_path,
                                              'flsite.db')))  # переопределяем путь. уточняем т.к. одной бд могут пользоваться несколько приложений
 
+login_manager = LoginManager(app)
 
-# db = SQLAlchemy(app)
+@login_manager.user_loader
+def load_user(user_id):
+    db = get_db()
+    dbase = FDataBase(db)
 
-# устанавливаем соединение с базой данных
+    print("load_user")
+    return UserLogin().fromDB(user_id, dbase)
+
+
 def connect_db():
+    '''устанавливаем соединение с базой данных'''
     conn = sqlite3.connect(app.config['DATABASE'])
     conn.row_factory = sqlite3.Row  # записи будут представленны в виде словаря
     return conn
@@ -35,10 +47,17 @@ def create_db():
 
 
 def get_db():
-    """ Соединение с базой данных, если его еще нет"""
+    '''Соединение с базой данных, если его еще нет'''
     if not hasattr(g, 'link_db'):
         g.link_db = connect_db()
     return g.link_db
+
+
+@app.teardown_appcontext
+def close_db(error):
+    """Закрываем соединение с базой данных, если оно было уставновлено"""
+    if hasattr(g, 'link_db'):
+        g.link_db.close()
 
 
 @app.route('/index')
@@ -70,6 +89,7 @@ def index4():
 
 @app.route('/index5')
 def index5():
+    print(f'{current_user.get_id()} ответил неверно')
     return render_template('index5.html')
 
 
@@ -158,7 +178,7 @@ def feedback():
                 and len(request.form['email']) != 0
                 and '@' in request.form['email']
                 and request.form['message'] != ''):
-            res = dbase.addPost(request.form['username'], request.form['email'], request.form['message'])
+            res = dbase.addFeedback(request.form['username'], request.form['email'], request.form['message'])
             if not res:
                 flash('Ошибка отправки. Проверьте корректность заполнения полей', category='error')
             else:
@@ -166,7 +186,7 @@ def feedback():
         else:
             flash('Ошибка отправки. Проверьте корректность заполнения полей', category='error')
 
-    return render_template('feedback.html', message_menu = dbase.getMenu()), 404
+    return render_template('feedback.html', message_menu=dbase.getMenu()), 404
 
 
 @app.errorhandler(404)
@@ -176,25 +196,43 @@ def pageNotFount(error):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    if 'userLogged' in session:
-        return redirect(url_for('profile', username=session['userLogged']))
-    elif request.method == 'POST' and request.form['username'] == 'admin' and request.form['psw'] == '123':
-        session['userLogged'] = request.form['username']
-        return redirect(url_for('profile', username=session['userLogged']))
-    return render_template('login.html')
+    db = get_db()
+    dbase = FDataBase(db)
+
+    if request.method == 'POST':
+        user = dbase.getUserByEmail(request.form['email'])
+        if user and check_password_hash(user['psw'], request.form['psw']):
+            userlogin = UserLogin().create(user)
+            login_user(userlogin)
+            return redirect(url_for('index'))
+
+        flash('Неверная пара логин\пароль', 'error')
+    return render_template('login.html', message_menu=dbase.getMenu())
 
 
-@app.route('/profile/<username>')
-def profile(username):
-    if 'userLogged' not in session or session['userLogged'] != username:
-        abort(401)
-    return f'Пользователь: {username}'
 
-@app.teardown_appcontext
-def close_db(error):
-    """Закрываем соединение с базой данных, если оно было уставновлено"""
-    if hasattr(g,'link_db'):
-        g.link_db.close()
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    db = get_db()
+    dbase = FDataBase(db)
+
+    if request.method == 'POST':
+        if (len(request.form['name']) != 0
+                and len(request.form['email']) != 0
+                and '@' in request.form['email']
+                and request.form['psw'] != ''
+                and request.form['psw'] == request.form['psw2']):
+            hash1 = generate_password_hash(request.form['psw'])
+            res = dbase.addUser(request.form['name'], request.form['email'], hash1)
+            if res:
+                flash('Вы успешно зарегистрированы', category='success')
+                return redirect(url_for('login'))
+            else:
+                flash('Ошибка  при добавлении в базу данных', category='error')
+        else:
+            flash('Ошибка. Проверьте корректность заполнения полей', category='error')
+
+    return render_template('register.html', message_menu=dbase.getMenu())
 
 
 if __name__ == '__main__':

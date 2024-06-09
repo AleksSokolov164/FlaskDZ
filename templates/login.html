@@ -9,8 +9,11 @@
 {{ super() }}
 <form action="/login" method="POST" class="form-contact">
 
-    <p><h5><label>Логин </label></h5><input type="text" name="username" value="" required/>
-    <p><h5><label>Пароль</label></h5><input type="text" name="psw" value="" required/>
+    <p><h5><label>Email </label></h5><input type="text" name="email" value="" required/>
+    <p><h5><label>Пароль</label></h5><input type="password" name="psw" value="" required/>
+    <p><input type="checkbox" name="remainme" /> Запомнить меня
     <p><input type="submit" value="Войти"/>
+    <hr align=left width="300px">
+    <p><a href="{{url_for('register')}}">Регистрация</a>
 </form>
 {% endblock %}
